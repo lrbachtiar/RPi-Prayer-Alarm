@@ -7,11 +7,16 @@ from praytimes import PrayTimes
 #Get Prayer Times
 #If located in southern hemisphere, use a negative latitude value
 #--------------------
+
+#User location
 lat = 51.5171
 long = 0.1062
 
+#System time and date
 now = datetime.datetime.now()
 
+#Prayer time calculation
+#Additional options available in praytimes.py
 PT = PrayTimes('ISNA') 
 times = PT.getTimes((now.year,now.month,now.day), (lat, long), 0,1) 
 
@@ -21,12 +26,10 @@ print times['asr']
 print times['maghrib']
 print times['isha']
 
-
 #Update Crontab with Prayer Times
 #---------------------------------
 
 from crontab import CronTab
-
 
 #Function to add azaan time to cron
 def addAzaanTime (strPrayerName, strPrayerTime, objCronTab, strCommand):
@@ -61,7 +64,6 @@ addAzaanTime('dhuhr',times['dhuhr'],system_cron,strPlayAzaanMP3Command)
 addAzaanTime('asr',times['asr'],system_cron,strPlayAzaanMP3Command)
 addAzaanTime('maghrib',times['maghrib'],system_cron,strPlayAzaanMP3Command)
 addAzaanTime('isha',times['isha'],system_cron,strPlayAzaanMP3Command)
-
 
 system_cron.write()
 
